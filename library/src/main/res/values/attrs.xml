@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NineGridImageView">
+        <attr format="dimension" name="singleImgSize"/>
+        <attr format="dimension" name="imgGap"/>
+        <attr format="enum" name="showStyle">
+            <enum name="grid" value="0"/>
+            <enum name="fill" value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>
