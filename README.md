@@ -1,6 +1,5 @@
 # NineGridImageView
 ===
-
 [中文版文档移步](http://laobie.github.io/android/2016/03/06/nine-grid-iamge-view-libaray.html)
 
 This is a custom widget for Android, which uesd for show grid pictures, such as you see in weibo or wechat.
