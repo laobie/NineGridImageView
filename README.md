@@ -83,21 +83,21 @@ private NineGridImageViewAdapter<Photo> mAdapter = new NineGridImageViewAdapter<
 	@Override
 	protected void onDisplayImage(Context context, ImageView imageView, Photo photo) {
 		Picasso.with(context)
-                    .load(photo.getSmallUrl)
-                    .placeholder(R.drawable.ic_default_image)
-                    .into(imageView);
-            }
+		    .load(photo.getSmallUrl)
+		    .placeholder(R.drawable.ic_default_image)
+		    .into(imageView);
+    }
 
-        @Override
-        protected ImageView generateImageView(Context context) {
-            return super.generateImageView(context);
-        }
+    @Override
+    protected ImageView generateImageView(Context context) {
+        return super.generateImageView(context);
+    }
 
-        @Override
-        protected void onItemImageClick(Context context, int index, List<Photo> photoList) {
-           showBigPicture(context, photoList.get(index).getBigUrl());
-        }
-    };
+    @Override
+    protected void onItemImageClick(Context context, int index, List<Photo> photoList) {
+       showBigPicture(context, photoList.get(index).getBigUrl());
+    }
+};
         
 ...
 	mNineGridImageView.setAdapter(mAdapter);
