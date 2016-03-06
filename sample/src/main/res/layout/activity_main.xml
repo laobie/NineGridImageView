@@ -13,9 +13,16 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
+    <ImageView
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/ic_icon"/>
+
     <Button
         android:id="@+id/btn_fill_style"
-        android:layout_width="120dp"
+        android:layout_width="160dp"
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="56dp"
@@ -25,7 +32,7 @@
 
     <Button
         android:id="@+id/btn_grid_style"
-        android:layout_width="120dp"
+        android:layout_width="160dp"
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
