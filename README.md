@@ -2,7 +2,7 @@
 
 [中文版说明点我](http://laobie.github.io/android/2016/03/06/nine-grid-iamge-view-libaray.html)
 
-This is a custom widget for Android, which uesd for show grid pictures, such as you see in weibo or wechat.
+This is a custom widget for Android, which uesd for showing grid pictures, such as you seeing in weibo or wechat.
 
 ![](http://ac-qygvx1cc.clouddn.com/ee5906c846ad3346.png)
 
@@ -104,7 +104,7 @@ private NineGridImageViewAdapter<Photo> mAdapter = new NineGridImageViewAdapter<
 ...
 ~~~
 
-##### 4. set pictures data to NineGridImageView
+##### 4. set pictures data for NineGridImageView
 ~~~ java
 nineGridImageView.setImagesData(List<T> imageDataList);
 ~~~
