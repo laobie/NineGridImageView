@@ -24,6 +24,7 @@ public class NineGridImageView<T> extends ViewGroup {
     private int mRowCount;       // 行数
     private int mColumnCount;    // 列数
 
+    private int mMaxSize;        // 最大图片数
     private int mShowStyle;     // 显示风格
     private int mGap;           // 宫格间距
     private int mSingleImgSize; // 单张图片时的尺寸
@@ -44,6 +45,7 @@ public class NineGridImageView<T> extends ViewGroup {
         this.mGap = (int) typedArray.getDimension(R.styleable.NineGridImageView_imgGap, 0);
         this.mSingleImgSize = typedArray.getDimensionPixelSize(R.styleable.NineGridImageView_singleImgSize, -1);
         this.mShowStyle = typedArray.getInt(R.styleable.NineGridImageView_showStyle, STYLE_GRID);
+        this.mMaxSize = typedArray.getInt(R.styleable.NineGridImageView_maxSize, 9);
         typedArray.recycle();
     }
 
@@ -55,7 +57,7 @@ public class NineGridImageView<T> extends ViewGroup {
         int totalWidth = width - getPaddingLeft() - getPaddingRight();
         if (mImgDataList != null && mImgDataList.size() > 0) {
             if (mImgDataList.size() == 1 && mSingleImgSize != -1) {
-                mGridSize = mSingleImgSize;
+                mGridSize = mSingleImgSize > totalWidth ? totalWidth : mSingleImgSize;
             } else {
                 mImageViewList.get(0).setScaleType(ImageView.ScaleType.CENTER_CROP);
                 mGridSize = (totalWidth - mGap * (mColumnCount - 1)) / mColumnCount;
@@ -104,11 +106,16 @@ public class NineGridImageView<T> extends ViewGroup {
      */
     public void setImagesData(List lists) {
         if (lists == null || lists.isEmpty()) {
+            this.setVisibility(GONE);
             return;
+        } else {
+            this.setVisibility(VISIBLE);
         }
-        if (lists.size() > 9) {
-            lists = lists.subList(0, 9);
+
+        if (mMaxSize > 0 && lists.size() > mMaxSize) {
+            lists = lists.subList(0, mMaxSize);
         }
+
         int[] gridParam = calculateGridParam(lists.size(), mShowStyle);
         mRowCount = gridParam[0];
         mColumnCount = gridParam[1];
@@ -172,7 +179,7 @@ public class NineGridImageView<T> extends ViewGroup {
      * 设置 宫格参数
      *
      * @param imagesSize 图片数量
-     * @param showStyle 显示风格
+     * @param showStyle  显示风格
      * @return 宫格参数 gridParam[0] 宫格行数 gridParam[1] 宫格列数
      */
     protected static int[] calculateGridParam(int imagesSize, int showStyle) {
@@ -232,5 +239,14 @@ public class NineGridImageView<T> extends ViewGroup {
      */
     public void setSingleImgSize(int singleImgSize) {
         mSingleImgSize = singleImgSize;
+    }
+
+    /**
+     * 设置最大图片数
+     *
+     * @param maxSize 最大图片数
+     */
+    public void setMaxSize(int maxSize) {
+        mMaxSize = maxSize;
     }
 }

@@ -21,12 +21,11 @@ android {
 }
 
 dependencies {
-
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.jaeger.ninegridimageview:library:1.0.0'
+    compile 'com.jaeger.ninegridimageview:library:1.0.1'
 }
 

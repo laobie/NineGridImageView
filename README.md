@@ -6,6 +6,16 @@ This is a custom widget for Android, which uesd for showing grid pictures, such 
 
 ![](http://ac-qygvx1cc.clouddn.com/ee5906c846ad3346.png)
 
+### Update Log
++ 1.0.1 
+
+	+ bug fix: if no image data or images size is zero, this view will not show;
+	+ add set max size of images method;
+
++ 1.0.0 
+	
+	first publish
+
 ### Sample
 [Download NineGridImageView-Demo](http://fir.im/bkxn)
 
@@ -14,6 +24,12 @@ This is a custom widget for Android, which uesd for showing grid pictures, such 
 
 	`app:imgGap="4dp"` or `nineGridImageView.setGap(int gap);`
 	
++ set max size of images（）	
+
+	`app:maxSize="9"` or `nineGridImageView.setMaxSize(int maxSize);`
+	
+	if `maxSize` Less than or equal to 0, there may not limit for images size.
+
 + set style 
 
 	`app:showStyle="fill"` or `nineGridImageView.setShowStyle(int style);`
@@ -33,7 +49,7 @@ This is a custom widget for Android, which uesd for showing grid pictures, such 
 ### Usage
 ##### 1. Add the dependencies to your build.gradle file, NineGridImageView is avaiable in JCenter:
 
-	compile 'com.jaeger.ninegridimageview:library:1.0.0'
+	compile 'com.jaeger.ninegridimageview:library:1.0.1'
 	
 ##### 2. Add the NineGridImageView to your layout XML:
 

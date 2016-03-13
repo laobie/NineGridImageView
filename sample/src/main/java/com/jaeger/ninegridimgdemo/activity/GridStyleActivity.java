@@ -50,7 +50,7 @@ public class GridStyleActivity extends AppCompatActivity {
         mPostList = new ArrayList<>();
         for (int i = 0; i < 18; i++) {
             List<String> imgUrls = new ArrayList<>();
-            imgUrls.addAll(Arrays.asList(IMG_URL_LIST).subList(0, i % 9 + 1));
+            imgUrls.addAll(Arrays.asList(IMG_URL_LIST).subList(0, i % 9));
             Post post = new Post("Am I handsome? Am I handsome? Am I handsome?", imgUrls);
             mPostList.add(post);
         }
