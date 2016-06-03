@@ -7,6 +7,11 @@ This is a custom widget for Android, which uesd for showing grid pictures, such 
 ![](http://ac-qygvx1cc.clouddn.com/ee5906c846ad3346.png)
 
 ### Update Log
+
++ 1.0.2
+
+    + remove support library
+
 + 1.0.1 
 
 	+ bug fix: if no image data or images size is zero, this view will not show;
@@ -49,7 +54,7 @@ This is a custom widget for Android, which uesd for showing grid pictures, such 
 ### Usage
 ##### 1. Add the dependencies to your build.gradle file, NineGridImageView is avaiable in JCenter:
 
-	compile 'com.jaeger.ninegridimageview:library:1.0.1'
+	compile 'com.jaeger.ninegridimageview:library:1.0.2'
 	
 ##### 2. Add the NineGridImageView to your layout XML:
 
