@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Jaeger on 16/2/24.
  *
- * Email: chjie.jaeger@gamil.com
+ * Email: chjie.jaeger@gmail.com
  * GitHub: https://github.com/laobie
  */
 public class Post {

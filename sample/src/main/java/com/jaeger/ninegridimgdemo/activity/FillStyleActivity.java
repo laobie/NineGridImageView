@@ -1,7 +1,6 @@
 package com.jaeger.ninegridimgdemo.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,10 +15,10 @@ import java.util.List;
 /**
  * Created by Jaeger on 16/2/24.
  *
- * Email: chjie.jaeger@gamil.com
+ * Email: chjie.jaeger@gmail.com
  * GitHub: https://github.com/laobie
  */
-public class FillStyleActivity extends AppCompatActivity {
+public class FillStyleActivity extends BaseActivity {
 
     private RecyclerView mRvPostLister;
     private PostAdapter mPostAdapter;
@@ -38,8 +37,10 @@ public class FillStyleActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
         setContentView(R.layout.activity_recycler);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
