@@ -18,7 +18,7 @@ import java.util.List;
  * Email: chjie.jaeger@gmail.com
  * GitHub: https://github.com/laobie
  */
-public class GridStyleActivity extends BaseActivity {
+public class PuzzleStyleActivity extends BaseActivity {
 
     private RecyclerView mRvPostLister;
     private PostAdapter mNineImageAdapter;
@@ -51,7 +51,7 @@ public class GridStyleActivity extends BaseActivity {
             mPostList.add(post);
         }
 
-        mNineImageAdapter = new PostAdapter(this, mPostList, NineGridImageView.STYLE_GRID);
+        mNineImageAdapter = new PostAdapter(this, mPostList, NineGridImageView.STYLE_PUZZLE);
         mRvPostLister.setAdapter(mNineImageAdapter);
     }
 }

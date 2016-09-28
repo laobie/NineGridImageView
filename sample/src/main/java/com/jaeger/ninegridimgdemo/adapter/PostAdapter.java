@@ -2,7 +2,6 @@ package com.jaeger.ninegridimgdemo.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +45,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     @Override
     public PostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (mShowStyle == NineGridImageView.STYLE_FILL) {
-            return new PostViewHolder(mInflater.inflate(R.layout.item_post_fill_style, parent, false));
-        } else {
-            return new PostViewHolder(mInflater.inflate(R.layout.item_post_grid_style, parent, false));
+        switch (mShowStyle) {
+            case NineGridImageView.STYLE_FILL:
+                return new PostViewHolder(mInflater.inflate(R.layout.item_post_fill_style, parent, false));
+            case NineGridImageView.STYLE_PUZZLE:
+                return new PostViewHolder(mInflater.inflate(R.layout.item_post_puzzle_style, parent, false));
+
+            case NineGridImageView.STYLE_GRID:
+            default:
+                return new PostViewHolder(mInflater.inflate(R.layout.item_post_grid_style, parent, false));
         }
     }
 
@@ -84,9 +88,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         public void bind(Post post) {
             mNglContent.setImagesData(post.getImgUrlList());
             mTvContent.setText(post.getContent());
-
-            Log.d("jaeger", "九宫格高度: " + mNglContent.getMeasuredHeight());
-            Log.d("jaeger", "item 高度: " + itemView.getMeasuredHeight());
         }
     }
 }

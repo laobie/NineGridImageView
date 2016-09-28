@@ -2,4 +2,5 @@
     <string name="app_name">NineGridImgDemo</string>
     <string name="fill_style">Fill Style</string>
     <string name="grid_style">Grid Style</string>
+    <string name="puzzle_style">Puzzle Style</string>
 </resources>

@@ -25,6 +25,10 @@
         <activity
             android:name=".activity.GridStyleActivity"
             android:label="@string/grid_style"/>
+
+        <activity
+            android:name=".activity.PuzzleStyleActivity"
+            android:label="@string/puzzle_style"/>
     </application>
 
 </manifest>

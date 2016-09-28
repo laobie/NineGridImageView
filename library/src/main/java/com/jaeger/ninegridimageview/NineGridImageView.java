@@ -20,6 +20,7 @@ public class NineGridImageView<T> extends ViewGroup {
 
     public final static int STYLE_GRID = 0;     // 宫格布局
     public final static int STYLE_FILL = 1;     // 全填充布局
+    public final static int STYLE_PUZZLE = 2;     // 拼图布局
 
     private int mRowCount;       // 行数
     private int mColumnCount;    // 列数
@@ -56,18 +57,21 @@ public class NineGridImageView<T> extends ViewGroup {
         int height;
         int totalWidth = width - getPaddingLeft() - getPaddingRight();
         if (mImgDataList != null && mImgDataList.size() > 0) {
-            if (mImgDataList.size() == 1 && mSingleImgSize != -1) {
+            if (mShowStyle == STYLE_PUZZLE && mImgDataList.size() == 3) {
+                mGridSize = totalWidth / 3 * 2;
+                height = mGridSize;
+            } else if (mImgDataList.size() == 1 && mSingleImgSize != -1) {
                 mGridSize = mSingleImgSize > totalWidth ? totalWidth : mSingleImgSize;
+                height = mGridSize * mRowCount + mGap * (mRowCount - 1) + getPaddingTop() + getPaddingBottom();
             } else {
                 mImageViewList.get(0).setScaleType(ImageView.ScaleType.CENTER_CROP);
                 mGridSize = (totalWidth - mGap * (mColumnCount - 1)) / mColumnCount;
+                height = mGridSize * mRowCount + mGap * (mRowCount - 1) + getPaddingTop() + getPaddingBottom();
             }
-            height = mGridSize * mRowCount + mGap * (mRowCount - 1) + getPaddingTop() + getPaddingBottom();
-            setMeasuredDimension(width, height);
         } else {
             height = width;
-            setMeasuredDimension(width, height);
         }
+        setMeasuredDimension(width, height);
     }
 
     @Override
@@ -83,6 +87,29 @@ public class NineGridImageView<T> extends ViewGroup {
             return;
         }
         int childrenCount = mImgDataList.size();
+        if (mShowStyle == STYLE_PUZZLE && childrenCount == 3) {
+            for (int i = 0; i < childrenCount; i++) {
+                ImageView childrenView = (ImageView) getChildAt(i);
+                if (mAdapter != null) {
+                    mAdapter.onDisplayImage(getContext(), childrenView, mImgDataList.get(i));
+                }
+                switch (i) {
+                    case 0:
+                        childrenView.layout(getPaddingLeft(), getPaddingTop(), getPaddingLeft() + mGridSize,
+                            getPaddingTop() + mGridSize);
+                        break;
+                    case 1:
+                        childrenView.layout(getPaddingLeft() + mGridSize + mGap, getPaddingTop(),
+                            getPaddingLeft() + mGap + mGridSize / 2 * 3, getPaddingTop() + mGridSize / 2);
+                        break;
+                    case 2:
+                        childrenView.layout(getPaddingLeft() + mGridSize + mGap, getPaddingTop() + mGridSize / 2 + mGap,
+                            getPaddingLeft() + mGridSize / 2 * 3 + mGap, getPaddingTop() + mGridSize);
+                        break;
+                }
+            }
+            return;
+        }
         for (int i = 0; i < childrenCount; i++) {
             ImageView childrenView = (ImageView) getChildAt(i);
             if (mAdapter != null) {

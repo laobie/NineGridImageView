@@ -28,5 +28,13 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        findViewById(R.id.btn_puzzle_style).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PuzzleStyleActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
