@@ -82,8 +82,8 @@ public class NineGridImageView<T> extends ViewGroup {
         if (mImgDataList == null) {
             return;
         }
-        int childrenCount = mImgDataList.size();
-        for (int i = 0; i < childrenCount; i++) {
+        int showCount = getNeedShowCount(mImgDataList.size());
+        for (int i = 0; i < showCount; i++) {
             ImageView childrenView = (ImageView) getChildAt(i);
             if (mAdapter != null) {
                 mAdapter.onDisplayImage(getContext(), childrenView, mImgDataList.get(i));
@@ -112,16 +112,14 @@ public class NineGridImageView<T> extends ViewGroup {
             this.setVisibility(VISIBLE);
         }
 
-        if (mMaxSize > 0 && lists.size() > mMaxSize) {
-            lists = lists.subList(0, mMaxSize);
-        }
+        int newShowCount = getNeedShowCount(lists.size());
 
-        int[] gridParam = calculateGridParam(lists.size(), mShowStyle);
+        int[] gridParam = calculateGridParam(newShowCount, mShowStyle);
         mRowCount = gridParam[0];
         mColumnCount = gridParam[1];
         if (mImgDataList == null) {
             int i = 0;
-            while (i < lists.size()) {
+            while (i < newShowCount) {
                 ImageView iv = getImageView(i);
                 if (iv == null) {
                     return;
@@ -130,12 +128,11 @@ public class NineGridImageView<T> extends ViewGroup {
                 i++;
             }
         } else {
-            int oldViewCount = mImgDataList.size();
-            int newViewCount = lists.size();
-            if (oldViewCount > newViewCount) {
-                removeViews(newViewCount, oldViewCount - newViewCount);
-            } else if (oldViewCount < newViewCount) {
-                for (int i = oldViewCount; i < newViewCount; i++) {
+            int oldShowCount = getNeedShowCount(mImgDataList.size());
+            if (oldShowCount > newShowCount) {
+                removeViews(newShowCount, oldShowCount - newShowCount);
+            } else if (oldShowCount < newShowCount) {
+                for (int i = oldShowCount; i < newShowCount; i++) {
                     ImageView iv = getImageView(i);
                     if (iv == null) {
                         return;
@@ -146,6 +143,14 @@ public class NineGridImageView<T> extends ViewGroup {
         }
         mImgDataList = lists;
         requestLayout();
+    }
+
+    private int getNeedShowCount(int size) {
+        if (mMaxSize > 0 && size > mMaxSize) {
+            return mMaxSize;
+        } else {
+            return size;
+        }
     }
 
     /**
