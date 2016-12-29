@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.jaeger.ninegridimageview.ItemImageClickListener;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.jaeger.ninegridimgdemo.R;
@@ -54,7 +55,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     }
 
     public class PostViewHolder extends RecyclerView.ViewHolder {
-        private NineGridImageView mNglContent;
+        private NineGridImageView<String> mNglContent;
         private TextView mTvContent;
 
         private NineGridImageViewAdapter<String> mAdapter = new NineGridImageViewAdapter<String>() {
@@ -69,7 +70,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
 
             @Override
-            protected void onItemImageClick(Context context, int index, List<String> list) {
+            protected void onItemImageClick(Context context, ImageView imageView, int index, List<String> list) {
                 Toast.makeText(context, "image position is " + index, Toast.LENGTH_SHORT).show();
             }
         };
@@ -77,8 +78,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         public PostViewHolder(View itemView) {
             super(itemView);
             mTvContent = (TextView) itemView.findViewById(R.id.tv_content);
-            mNglContent = (NineGridImageView) itemView.findViewById(R.id.ngl_images);
+            mNglContent = (NineGridImageView<String>) itemView.findViewById(R.id.ngl_images);
             mNglContent.setAdapter(mAdapter);
+            mNglContent.setItemImageClickListener(new ItemImageClickListener<String>() {
+                @Override
+                public void onItemImageClick(Context context, ImageView imageView, int index, List<String> list) {
+                    Log.d("onItemImageClick", list.get(index));
+                }
+            });
         }
 
         public void bind(Post post) {

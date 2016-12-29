@@ -34,6 +34,7 @@ public class NineGridImageView<T> extends ViewGroup {
     private List<T> mImgDataList;
 
     private NineGridImageViewAdapter<T> mAdapter;
+    private ItemImageClickListener<T> mItemImageClickListener;
 
     public NineGridImageView(Context context) {
         this(context, null);
@@ -169,7 +170,10 @@ public class NineGridImageView<T> extends ViewGroup {
                 imageView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mAdapter.onItemImageClick(getContext(), position, mImgDataList);
+                        mAdapter.onItemImageClick(getContext(), (ImageView) v, position, mImgDataList);
+                        if (mItemImageClickListener != null) {
+                            mItemImageClickListener.onItemImageClick(getContext(), (ImageView) v, position, mImgDataList);
+                        }
                     }
                 });
                 return imageView;
@@ -253,5 +257,9 @@ public class NineGridImageView<T> extends ViewGroup {
      */
     public void setMaxSize(int maxSize) {
         mMaxSize = maxSize;
+    }
+
+    public void setItemImageClickListener(ItemImageClickListener<T> itemImageViewClickListener) {
+        mItemImageClickListener = itemImageViewClickListener;
     }
 }
