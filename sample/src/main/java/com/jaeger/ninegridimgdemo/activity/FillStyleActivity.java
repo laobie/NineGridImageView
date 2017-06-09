@@ -4,13 +4,17 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimgdemo.R;
 import com.jaeger.ninegridimgdemo.adapter.PostAdapter;
 import com.jaeger.ninegridimgdemo.entity.Post;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.jaeger.ninegridimageview.NineGridImageView.LEFTROWSPAN;
 
 /**
  * Created by Jaeger on 16/2/24.
@@ -51,7 +55,7 @@ public class FillStyleActivity extends BaseActivity {
         for (int i = 0; i < 18; i++) {
             List<String> imgUrls = new ArrayList<>();
             imgUrls.addAll(Arrays.asList(IMG_URL_LIST).subList(0, i % 9 + 1));
-            Post post = new Post("看图，字不重要。想看大图？抱歉我还没做这个 ( •̀ .̫ •́ )", imgUrls);
+            Post post = new Post("看图，字不重要。想看大图？抱歉我还没做这个 ( •̀ .̫ •́ )", LEFTROWSPAN, imgUrls);
             mPostList.add(post);
         }
         mPostAdapter = new PostAdapter(this, mPostList, NineGridImageView.STYLE_FILL);

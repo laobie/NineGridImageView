@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,15 +21,23 @@ public class NineGridImageView<T> extends ViewGroup {
 
     public final static int STYLE_GRID = 0;     // 宫格布局
     public final static int STYLE_FILL = 1;     // 全填充布局
+    ///////////////////////////////////////////////////////////////////////////
+    // 跨行跨列的类型
+    ///////////////////////////////////////////////////////////////////////////
+    public final static int NOSPAN = 0;         // 不跨行也不跨列
+    public final static int TOPCOLSPAN = 2;     // 首行跨列
+    public final static int BOTTOMCOLSPAN = 3;  // 末行跨列
+    public final static int LEFTROWSPAN = 4;    // 首列跨行
 
-    private int mRowCount;       // 行数
-    private int mColumnCount;    // 列数
+    private int mRowCount;                      // 行数
+    private int mColumnCount;                   // 列数
 
-    private int mMaxSize;        // 最大图片数
-    private int mShowStyle;     // 显示风格
-    private int mGap;           // 宫格间距
-    private int mSingleImgSize; // 单张图片时的尺寸
-    private int mGridSize;   // 宫格大小,即图片大小
+    private int mMaxSize;                       // 最大图片数
+    private int mShowStyle;                     // 显示风格
+    private int mGap;                           // 宫格间距
+    private int mSingleImgSize;                 // 单张图片时的尺寸
+    private int mGridSize;                      // 宫格大小,即图片大小
+    private int mSpanType;                      // 跨行跨列的类型
 
     private List<ImageView> mImageViewList = new ArrayList<>();
     private List<T> mImgDataList;
@@ -89,30 +98,125 @@ public class NineGridImageView<T> extends ViewGroup {
             if (mAdapter != null) {
                 mAdapter.onDisplayImage(getContext(), childrenView, mImgDataList.get(i));
             }
-            int rowNum = i / mColumnCount;
-            int columnNum = i % mColumnCount;
-            int left = (mGridSize + mGap) * columnNum + getPaddingLeft();
-            int top = (mGridSize + mGap) * rowNum + getPaddingTop();
-            int right = left + mGridSize;
-            int bottom = top + mGridSize;
-
-            childrenView.layout(left, top, right, bottom);
+            int rowNum, columnNum, left, top, right, bottom;
+            if (mSpanType == NOSPAN || showCount < 3 || showCount > 3) {
+                rowNum = i / mColumnCount;
+                columnNum = i % mColumnCount;
+                left = (mGridSize + mGap) * columnNum + getPaddingLeft();
+                top = (mGridSize + mGap) * rowNum + getPaddingTop();
+                right = left + mGridSize;
+                bottom = top + mGridSize;
+                childrenView.layout(left, top, right, bottom);
+            }else{
+                if (showCount==3){
+                    switch (mSpanType) {
+                        case TOPCOLSPAN:    //2行2列,首行跨列
+                            rowNum = i+1 / mColumnCount;
+                            columnNum =  i+1 % mColumnCount;
+                            left = (mGridSize + mGap) * (i == 0 ? 0 : columnNum) + getPaddingLeft();
+                            top = (mGridSize + mGap) * rowNum + getPaddingTop();
+                            right = left + mGridSize * (i == 0 ? columnNum : 1);
+                            bottom = top + mGridSize;
+                            childrenView.layout(left, top, right, bottom);
+                            break;
+                        case BOTTOMCOLSPAN: //2行2列,末行跨列
+                            rowNum = i / mColumnCount;
+                            columnNum =  i % mColumnCount;
+                            left = (mGridSize + mGap) * columnNum + getPaddingLeft();
+                            top = (mGridSize + mGap) * rowNum + getPaddingTop();
+                            right = left + mGridSize * (i == showCount - 1 ? columnNum : 1);
+                            bottom = top + mGridSize;
+                            childrenView.layout(left, top, right, bottom);
+                            break;
+                        case LEFTROWSPAN:   //2行2列,首列跨行
+                            if (i == 0) {
+                                left = getPaddingLeft();
+                                top = getPaddingTop();
+                                right = left + mGridSize;
+                                bottom = top + mGridSize * 2 + mGap;
+                            } else if (i == 1) {
+                                left = getPaddingLeft() + mGridSize + mGap;
+                                top = getPaddingTop();
+                                right = left + mGridSize;
+                                bottom = top + mGridSize;
+                            } else {
+                                left = getPaddingLeft() + mGridSize + mGap;
+                                top = getPaddingTop() + mGridSize + mGap;
+                                right = left + mGridSize;
+                                bottom = top + mGridSize;
+                            }
+                            childrenView.layout(left, top, right, bottom);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         }
+    }
+
+    /**
+     * 根据跨行跨列的类型，以及图片数量，来确定行数和列数
+     *
+     * @param imagesSize 图片数量
+     * @param gridParam  跨行跨列的类型
+     */
+    private void generatForSpanType(int imagesSize, int[] gridParam) {
+        if (imagesSize <= 2) {
+            gridParam[0] = 1;
+            gridParam[1] = imagesSize;
+        } else if (imagesSize == 3) {
+            switch (mSpanType) {
+                case TOPCOLSPAN:    //2行2列,首行跨列
+                case BOTTOMCOLSPAN: //2行2列,末行跨列
+                case LEFTROWSPAN:   //2行2列,首列跨行
+                    gridParam[0] = 2;
+                    gridParam[1] = 2;
+                    break;
+                case NOSPAN:    //1行3列
+                default:
+                    gridParam[0] = 1;
+                    gridParam[1] = 3;
+                    break;
+            }
+        } else if (imagesSize <= 6) {
+            switch (mSpanType) {
+                case TOPCOLSPAN:    //3行3列,首行跨列
+                case BOTTOMCOLSPAN: //3行3列,末行跨列
+                case LEFTROWSPAN:   //3行3列,首列跨行
+                    gridParam[0] = 3;
+                    gridParam[1] = 3;
+                    break;
+                case NOSPAN:    //2行
+                default:
+                    gridParam[0] = 2;
+                    gridParam[1] = imagesSize / 2 + imagesSize % 2;
+                    break;
+            }
+        } else {
+            gridParam[0] = imagesSize / 3 + (imagesSize % 3 == 0 ? 0 : 1);
+            gridParam[1] = 3;
+        }
+    }
+
+    public void setImagesData(List<T> lists) {
+        setImagesData(lists,NOSPAN);
     }
 
     /**
      * 设置图片数据
      *
-     * @param lists 图片数据集合
+     * @param lists    图片数据集合
+     * @param spanType 跨行跨列排版类型
      */
-    public void setImagesData(List lists) {
+    public void setImagesData(List<T> lists,int spanType) {
         if (lists == null || lists.isEmpty()) {
             this.setVisibility(GONE);
             return;
         } else {
             this.setVisibility(VISIBLE);
         }
-
+        this.mSpanType = spanType;
         int newShowCount = getNeedShowCount(lists.size());
 
         int[] gridParam = calculateGridParam(newShowCount, mShowStyle);
@@ -191,20 +295,11 @@ public class NineGridImageView<T> extends ViewGroup {
      * @param showStyle  显示风格
      * @return 宫格参数 gridParam[0] 宫格行数 gridParam[1] 宫格列数
      */
-    protected static int[] calculateGridParam(int imagesSize, int showStyle) {
+    protected int[] calculateGridParam(int imagesSize, int showStyle) {
         int[] gridParam = new int[2];
         switch (showStyle) {
             case STYLE_FILL:
-                if (imagesSize < 3) {
-                    gridParam[0] = 1;
-                    gridParam[1] = imagesSize;
-                } else if (imagesSize <= 4) {
-                    gridParam[0] = 2;
-                    gridParam[1] = 2;
-                } else {
-                    gridParam[0] = imagesSize / 3 + (imagesSize % 3 == 0 ? 0 : 1);
-                    gridParam[1] = 3;
-                }
+                generatForSpanType(imagesSize, gridParam);
                 break;
             default:
             case STYLE_GRID:
