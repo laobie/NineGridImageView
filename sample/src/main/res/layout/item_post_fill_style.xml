@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/tv_content"

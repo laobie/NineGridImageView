@@ -18,7 +18,6 @@ import java.util.List;
  * GitHub: https://github.com/laobie
  */
 public class NineGridImageView<T> extends ViewGroup {
-
     public final static int STYLE_GRID = 0;     // 宫格布局
     public final static int STYLE_FILL = 1;     // 全填充布局
     ///////////////////////////////////////////////////////////////////////////
@@ -63,6 +62,7 @@ public class NineGridImageView<T> extends ViewGroup {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = MeasureSpec.getSize(widthMeasureSpec);
+        int height = MeasureSpec.getSize(heightMeasureSpec);
         int totalWidth = width - getPaddingLeft() - getPaddingRight();
         if (mImgDataList != null && mImgDataList.size() > 0) {
             if (mImgDataList.size() == 1 && mSingleImgSize != -1) {
@@ -71,11 +71,9 @@ public class NineGridImageView<T> extends ViewGroup {
                 mImageViewList.get(0).setScaleType(ImageView.ScaleType.CENTER_CROP);
                 mGridSize = (totalWidth - mGap * (mColumnCount - 1)) / mColumnCount;
             }
-            int height = mGridSize * mRowCount + mGap * (mRowCount - 1) + getPaddingTop() + getPaddingBottom();
-            setMeasuredDimension(width, height);
-        } else {
-            setMeasuredDimension(width, width);
+            height = mGridSize * mRowCount + mGap * (mRowCount - 1) + getPaddingTop() + getPaddingBottom();
         }
+        setMeasuredDimension(width, height);
     }
 
     @Override
