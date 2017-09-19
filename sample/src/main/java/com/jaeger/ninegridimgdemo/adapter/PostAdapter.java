@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.jaeger.ninegridimageview.ItemImageClickListener;
+import com.jaeger.ninegridimageview.ItemImageLongClickListener;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.jaeger.ninegridimgdemo.R;
@@ -73,6 +74,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             protected void onItemImageClick(Context context, ImageView imageView, int index, List<String> list) {
                 Toast.makeText(context, "image position is " + index, Toast.LENGTH_SHORT).show();
             }
+
+            @Override
+            protected boolean onItemImageLongClick(Context context, ImageView imageView, int index, List<String> list) {
+                Toast.makeText(context, "image long click position is " + index, Toast.LENGTH_SHORT).show();
+                return true;
+            }
         };
 
         public PostViewHolder(View itemView) {
@@ -84,6 +91,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 @Override
                 public void onItemImageClick(Context context, ImageView imageView, int index, List<String> list) {
                     Log.d("onItemImageClick", list.get(index));
+                }
+            });
+            mNglContent.setItemImageLongClickListener(new ItemImageLongClickListener<String>() {
+                @Override
+                public boolean onItemImageLongClick(Context context, ImageView imageView, int index, List<String> list) {
+                    Log.d("onItemImageLongClick", list.get(index));
+                    return true;
                 }
             });
         }
