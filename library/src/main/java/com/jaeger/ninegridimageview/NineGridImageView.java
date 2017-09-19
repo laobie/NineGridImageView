@@ -43,6 +43,7 @@ public class NineGridImageView<T> extends ViewGroup {
 
     private NineGridImageViewAdapter<T> mAdapter;
     private ItemImageClickListener<T> mItemImageClickListener;
+    private ItemImageLongClickListener<T> mItemImageLongClickListener;
 
     public NineGridImageView(Context context) {
         this(context, null);
@@ -628,6 +629,16 @@ public class NineGridImageView<T> extends ViewGroup {
                         }
                     }
                 });
+                imageView.setOnLongClickListener(new OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        boolean consumedEvent = mAdapter.onItemImageLongClick(getContext(), (ImageView) v, position, mImgDataList);
+                        if (mItemImageLongClickListener != null) {
+                            consumedEvent = mItemImageLongClickListener.onItemImageLongClick(getContext(), (ImageView) v, position, mImgDataList) || consumedEvent;
+                        }
+                        return consumedEvent;
+                    }
+                });
                 return imageView;
             } else {
                 Log.e("NineGirdImageView", "Your must set a NineGridImageViewAdapter for NineGirdImageView");
@@ -704,5 +715,9 @@ public class NineGridImageView<T> extends ViewGroup {
 
     public void setItemImageClickListener(ItemImageClickListener<T> itemImageViewClickListener) {
         mItemImageClickListener = itemImageViewClickListener;
+    }
+
+    public void setItemImageLongClickListener(ItemImageLongClickListener<T> itemImageViewLongClickListener) {
+        mItemImageLongClickListener = itemImageViewLongClickListener;
     }
 }
