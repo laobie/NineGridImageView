@@ -16,6 +16,10 @@ public abstract class NineGridImageViewAdapter<T> {
     protected void onItemImageClick(Context context, ImageView imageView, int index, List<T> list) {
     }
 
+    protected boolean onItemImageLongClick(Context context, ImageView imageView, int index, List<T> list) {
+        return false;
+    }
+
     protected ImageView generateImageView(Context context) {
         GridImageView imageView = new GridImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
