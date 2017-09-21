@@ -8,6 +8,9 @@ This is a custom widget for Android, which uesd for showing grid pictures, such 
 
 ### Update Log
 
+- 1.1.1
+  - add longClickListener method
+
 - 1.1.0
   - modify `NineGridImageViewAdapter` 's  `onItemImageClick()` method, providing clicked ImageView
   - add `setItemImageClickListener()` method
@@ -62,7 +65,7 @@ This is a custom widget for Android, which uesd for showing grid pictures, such 
 ### Usage
 ##### 1. Add the dependencies to your build.gradle file, NineGridImageView is avaiable in JCenter:
 
-	compile 'com.jaeger.ninegridimageview:library:1.1.0'
+	compile 'com.jaeger.ninegridimageview:library:1.1.1'
 
 ##### 2. Add the NineGridImageView to your layout XML:
 
