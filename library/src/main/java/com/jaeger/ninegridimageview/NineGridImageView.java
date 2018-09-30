@@ -61,7 +61,6 @@ public class NineGridImageView<T> extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
         int totalWidth = width - getPaddingLeft() - getPaddingRight();
@@ -124,9 +123,6 @@ public class NineGridImageView<T> extends ViewGroup {
             right = left + mGridSize;
             bottom = top + mGridSize;
             childrenView.layout(left, top, right, bottom);
-            if (mAdapter != null) {
-                mAdapter.onDisplayImage(getContext(), childrenView, mImgDataList.get(i));
-            }
         }
     }
 
@@ -194,9 +190,6 @@ public class NineGridImageView<T> extends ViewGroup {
                     break;
                 default:
                     break;
-            }
-            if (mAdapter != null) {
-                mAdapter.onDisplayImage(getContext(), childrenView, mImgDataList.get(i));
             }
         }
     }
@@ -280,9 +273,6 @@ public class NineGridImageView<T> extends ViewGroup {
                     break;
                 default:
                     break;
-            }
-            if (mAdapter != null) {
-                mAdapter.onDisplayImage(getContext(), childrenView, mImgDataList.get(i));
             }
         }
     }
@@ -381,9 +371,6 @@ public class NineGridImageView<T> extends ViewGroup {
                     break;
                 default:
                     break;
-            }
-            if (mAdapter != null) {
-                mAdapter.onDisplayImage(getContext(), childrenView, mImgDataList.get(i));
             }
         }
     }
@@ -498,9 +485,6 @@ public class NineGridImageView<T> extends ViewGroup {
                 default:
                     break;
             }
-            if (mAdapter != null) {
-                mAdapter.onDisplayImage(getContext(), childrenView, mImgDataList.get(i));
-            }
         }
     }
 
@@ -596,7 +580,21 @@ public class NineGridImageView<T> extends ViewGroup {
             }
         }
         mImgDataList = lists;
-        requestLayout();
+        updateDisplayImage();
+    }
+
+    /**
+     * 更新 ImageView 显示 url
+     */
+    private void updateDisplayImage() {
+        if (mImgDataList == null) return;
+        int showChildrenCount = getNeedShowCount(mImgDataList.size());
+        for (int i = 0; i < showChildrenCount; i++) {
+            ImageView childrenView = (ImageView) getChildAt(i);
+            if (childrenView != null && mAdapter != null) {
+                mAdapter.onDisplayImage(getContext(), childrenView, mImgDataList.get(i));
+            }
+        }
     }
 
     private int getNeedShowCount(int size) {
