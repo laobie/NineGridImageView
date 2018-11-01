@@ -684,6 +684,7 @@ public class NineGridImageView<T> extends ViewGroup {
      */
     public void setGap(int gap) {
         mGap = gap;
+        requestLayout();
     }
 
     /**
@@ -693,6 +694,7 @@ public class NineGridImageView<T> extends ViewGroup {
      */
     public void setShowStyle(int showStyle) {
         mShowStyle = showStyle;
+        requestLayout();
     }
 
     /**
@@ -702,6 +704,7 @@ public class NineGridImageView<T> extends ViewGroup {
      */
     public void setSingleImgSize(int singleImgSize) {
         mSingleImgSize = singleImgSize;
+        requestLayout();
     }
 
     /**
@@ -711,6 +714,7 @@ public class NineGridImageView<T> extends ViewGroup {
      */
     public void setMaxSize(int maxSize) {
         mMaxSize = maxSize;
+        requestLayout();
     }
 
     public void setItemImageClickListener(ItemImageClickListener<T> itemImageViewClickListener) {
