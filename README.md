@@ -1,5 +1,7 @@
 # NineGridImageView
 
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
+
 [中文版说明点我](http://laobie.github.io/android/2016/03/06/nine-grid-iamge-view-libaray.html)
 
 This is a custom widget for Android, which uesd for showing grid pictures, such as you seeing in weibo or wechat.
