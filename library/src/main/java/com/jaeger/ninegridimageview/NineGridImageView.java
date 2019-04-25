@@ -683,7 +683,8 @@ public class NineGridImageView<T> extends ViewGroup {
      * @param gap 宫格间距 px
      */
     public void setGap(int gap) {
-        mGap = gap;
+    	mGap = gap;
+		requestLayout();
     }
 
     /**
@@ -692,8 +693,9 @@ public class NineGridImageView<T> extends ViewGroup {
      * @param showStyle 显示风格
      */
     public void setShowStyle(int showStyle) {
-        mShowStyle = showStyle;
-    }
+    	mShowStyle = showStyle;
+    	requestLayout();
+	}
 
     /**
      * 设置只有一张图片时的尺寸大小
@@ -701,7 +703,8 @@ public class NineGridImageView<T> extends ViewGroup {
      * @param singleImgSize 单张图片的尺寸大小
      */
     public void setSingleImgSize(int singleImgSize) {
-        mSingleImgSize = singleImgSize;
+		mSingleImgSize = singleImgSize;
+		requestLayout();
     }
 
     /**
@@ -710,8 +713,9 @@ public class NineGridImageView<T> extends ViewGroup {
      * @param maxSize 最大图片数
      */
     public void setMaxSize(int maxSize) {
-        mMaxSize = maxSize;
-    }
+    	mMaxSize = maxSize;
+    	requestLayout();
+	}
 
     public void setItemImageClickListener(ItemImageClickListener<T> itemImageViewClickListener) {
         mItemImageClickListener = itemImageViewClickListener;
